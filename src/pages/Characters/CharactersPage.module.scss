@@ -1,0 +1,40 @@
+.characters__wrapper {
+  text-align: center;
+}
+
+.characters__container,
+.button__container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 30px;
+  row-gap: 30px;
+  justify-content: space-around;
+}
+
+.characters__card {
+  border: 3px solid rgb(230, 133, 7);
+  border-radius: 20px;
+  padding: 10px;
+  max-width: 322px;
+  background-color: #7f817f;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.card__image {
+  max-width: 300px;
+  width: 100%;
+  margin: 0;
+  align-items: center;
+  justify-items: center;
+  border-radius: 20px;
+  border: 3px solid rgb(230, 133, 7);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.card__name {
+  display: flex;
+  justify-content: space-between;
+  padding: 25px 0;
+  font-size: 20px;
+}

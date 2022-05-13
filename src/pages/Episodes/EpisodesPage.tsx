@@ -1,10 +1,10 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
 import { Episode } from '../Modals/EpisodesModal';
-import './EpisodesPage.scss';
+import styles from './EpisodesPage.module.scss';
 
 const EpisodesPage = () => {
   const [episodes, setEpisodes] = useState<Episode[]>();
@@ -12,6 +12,7 @@ const EpisodesPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMesagge, setErrorMessage] = useState<string>('');
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const getEpisodes = async () => {
@@ -34,14 +35,13 @@ const EpisodesPage = () => {
 
   useEffect(() => {
     getEpisodes();
-    setInputValue('');
   }, [search]);
 
   return (
     <div>
       <div className="row center-xs">
         <div className="col-xs-12">
-          <div className="text__box">
+          <div className={styles.text__box}>
             <span>e</span>
             <span>p</span>
             <span>i</span>
@@ -56,33 +56,34 @@ const EpisodesPage = () => {
       <div className="row center-xs middle-xs">
         <div className="col-xs-12">
           <form
-            className="form__container"
+            className={styles.form__container}
             action="submit"
             onSubmit={(e) => {
               e.preventDefault();
               setInputValue('');
+              getEpisodes();
             }}
           >
             <input
-              className="search__input"
+              className={styles.search__input}
               type="text"
               value={inputValue}
               onChange={(event) => setInputValue(event.target.value)}
               placeholder="How can I help You?"
             />
             <button
-              className="characters__card--button"
+              className="button"
               type="button"
-              onClick={() => getEpisodes()}
+              onClick={() => { getEpisodes(); setInputValue(''); setSearchParams({ name: inputValue }); }}
             >
               Search
             </button>
           </form>
 
           <button
-            className="characters__card--button"
+            className="button"
             type="button"
-            onClick={getEpisodes}
+            onClick={() => { getEpisodes(); setSearchParams({}); }}
           >
             All
           </button>
@@ -94,13 +95,13 @@ const EpisodesPage = () => {
 
       <div className="row center-xs">
         <div className="col-xs-11 col-md-11">
-          <div className="episodes__container">
+          <div className={styles.episodes__container}>
 
             { episodes && episodes.map(({
               id, name, air_date, episode,
             }) => (
               <div
-                className="episodes__cards"
+                className={styles.episodes__cards}
                 key={id}
               >
                 <h3>{name}</h3>
@@ -110,7 +111,7 @@ const EpisodesPage = () => {
                 <span>{air_date}</span>
 
                 <button
-                  className="episodes__card--button"
+                  className={styles.episodes__button}
                   onClick={() => navigate(`/episodes/${id}`)}
                 >
                   Read more

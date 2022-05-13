@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Page404.scss';
+import styles from './Page404.module.scss';
 
 const Page404 = () => {
   const navigate = useNavigate();
@@ -8,16 +8,15 @@ const Page404 = () => {
   return (
     <div className="row center-xs">
       <div className="col-xs-12 col-md-8">
-        <div className="error__container">
-
+        <div className={styles.error__container}>
           <span
-            className="error__text"
+            className={styles.error__text}
           >
             The page you are looking for doesn&apos;t exist or has been moved!
 
           </span>
           <button
-            className="characters__card--button"
+            className="button"
             onClick={() => navigate('/home')}
           >
             Return to the home page
@@ -25,7 +24,6 @@ const Page404 = () => {
         </div>
       </div>
     </div>
-
   );
 };
 

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
 import { LocationL } from '../Modals/LocationModal';
-import './LocationsPage.scss';
+import styles from './LocationsPage.module.scss';
 
 const EpisodesPage = () => {
   const [locations, setLocations] = useState<LocationL[]>();
@@ -55,12 +55,12 @@ const EpisodesPage = () => {
 
       <div className="row center-xs">
         <div className="col-xs-11 col-md-11">
-          <div className="locations__container">
+          <div className={styles.locations__container}>
             { locations && locations.map(({
               id, name, type, url, dimension,
             }) => (
               <div
-                className="locations__cards"
+                className={styles.locations__cards}
                 key={id}
               >
                 <h3>
@@ -79,13 +79,12 @@ const EpisodesPage = () => {
                   {dimension}
                 </span>
                 <button
-                  className="episodes__card--button"
+                  className={styles.locations__button}
                   onClick={() => navigate(`/location/${id}`)}
                 >
                   Read more
                 </button>
               </div>
-
             ))}
           </div>
         </div>

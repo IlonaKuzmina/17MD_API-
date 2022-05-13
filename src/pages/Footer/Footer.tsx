@@ -1,11 +1,11 @@
 import React from 'react';
-import './Footer.scss';
+import styles from './Footer.module.scss';
 
 const Footer = () => {
   const b = 5;
   return (
-    <div className="footer__container">
-      <span className="footer__container--text">@ 2022, Antira</span>
+    <div className={styles.footer__container}>
+      <span>@ 2022, Antira</span>
     </div>
   );
 };

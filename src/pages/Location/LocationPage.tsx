@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
 import { LocationL } from '../Modals/LocationModal';
+import style from './LocationPage.module.scss';
 
 const LocationPage = () => {
   const [location, setLocation] = useState<LocationL>();
@@ -38,7 +39,7 @@ const LocationPage = () => {
       <div className="col-xs-1">
         <button
           disabled={id === '1'}
-          className="card__arrow"
+          className={style.card__arrow}
           onClick={() => {
             navigate(`/location/${Number(id) - 1}`);
             setCharUrl(`https://rickandmortyapi.com/api/location/${Number(id) - 1}`);
@@ -54,41 +55,41 @@ const LocationPage = () => {
         </button>
       </div>
       <div className="col-xs-10 col-md-9">
-        <div className="character__card--container">
+        <div className={style.card__container}>
           <div className="row center-xs">
             <div className="col-xs-12 col-md-12">
-              <h1 className="character__card--title">
+              <h1 className={style.card__title}>
                 <strong>Episode name:</strong>
                 {' '}
                 {location?.name}
               </h1>
-              <hr className="character__card--hr" />
+              <hr className={style.card__line} />
             </div>
           </div>
           <div className="row center-xs">
 
             <div className="col-xs-12 col-md-10">
               {loading && <Loader />}
-              <div className="info__container">
-                <span className="info--specification">
+              <div className={style.info__container}>
+                <span className={style.info__specification}>
                   <strong>Id:</strong>
                   {' '}
                   {location?.id}
                 </span>
 
-                <span className="info--specification">
+                <span className={style.info__specification}>
                   <strong>Type:</strong>
                   {' '}
                   {location?.type}
                 </span>
 
-                <span className="info--specification">
+                <span className={style.info__specification}>
                   <strong>Dimension:</strong>
                   {' '}
                   {location?.dimension}
                 </span>
 
-                <span className="info--specification">
+                <span className={style.info__specification}>
                   <strong>Created:</strong>
                   {' '}
                   {location?.created}
@@ -96,7 +97,7 @@ const LocationPage = () => {
 
               </div>
               <button
-                className="characters__card--button"
+                className="button"
                 onClick={() => navigate('/location')}
               >
                 Back to all episodes!
@@ -109,7 +110,7 @@ const LocationPage = () => {
       <div className="col-xs-1">
         <button
           disabled={id === '826'}
-          className="card__arrow"
+          className={style.card__arrow}
           onClick={() => {
             navigate(`/location/${Number(id) + 1}`);
             setCharUrl(`https://rickandmortyapi.com/api/location/${Number(id) + 1}`);

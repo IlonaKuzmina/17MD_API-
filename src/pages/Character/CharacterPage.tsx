@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
 import { Character } from '../Modals/CharactersModal';
-import './CharacterPage.scss';
+import styles from './CharacterPage.module.scss';
 
 const CharacterPage = () => {
   const [character, setCharacter] = useState<Character>();
@@ -40,7 +40,7 @@ const CharacterPage = () => {
       <div className="col-xs-1">
         <button
           disabled={id === '1'}
-          className="card__arrow"
+          className={styles.card__arrow}
           onClick={() => {
             navigate(`/characters/${Number(id) - 1}`);
             setCharUrl(`https://rickandmortyapi.com/api/character/${Number(id) - 1}`);
@@ -57,50 +57,50 @@ const CharacterPage = () => {
       </div>
       <div className="col-xs-10 col-md-9">
 
-        <div className="character__card--container">
+        <div className={styles.card__container}>
           <div className="row center-xs">
             {loading && <Loader />}
             <div className="col-xs-12 col-md-12">
-              <h1 className="character__card--title">
+              <h1 className={styles.card__title}>
                 {character?.name}
               </h1>
-              <hr className="character__card--hr" />
+              <hr className={styles.card__line} />
             </div>
           </div>
           <div className="row center-xs">
             <div className="col-xs-12 col-md-5">
-              <div className="image__container">
-                <img className="image--specification" src={character?.image} alt="Nav bildes" />
+              <div>
+                <img className={styles.character__image} src={character?.image} alt="Nav bildes" />
               </div>
             </div>
             <div className="col-xs-12 col-md-6">
-              <div className="info__container">
-                <span className="info--specification">
+              <div className={styles.info__container}>
+                <span className={styles.info__specification}>
                   <strong>Id:</strong>
                   {' '}
                   {character?.id}
                 </span>
-                <span className="info--specification">
+                <span className={styles.info__specification}>
                   <strong>Status:</strong>
                   {' '}
                   {character?.status}
                 </span>
-                <span className="info--specification">
+                <span className={styles.info__specification}>
                   <strong>Species:</strong>
                   {' '}
                   {character?.species}
                 </span>
-                <span className="info--specification">
+                <span className={styles.info__specification}>
                   <strong>Type:</strong>
                   {' '}
                   {character?.type}
                 </span>
-                <span className="info--specification">
+                <span className={styles.info__specification}>
                   <strong>Gender:</strong>
                   {' '}
                   {character?.genders}
                 </span>
-                <span className="info--specification episodes__list">
+                <span className={styles.last__infospceification}>
                   <strong>Episode:</strong>
                   {' '}
                   {character?.episode.map((epsi) => (
@@ -113,7 +113,7 @@ const CharacterPage = () => {
                 </span>
               </div>
               <button
-                className="characters__card--button"
+                className="button"
                 onClick={() => navigate('/characters')}
               >
                 Back to all characters!
@@ -126,7 +126,7 @@ const CharacterPage = () => {
       <div className="col-xs-1">
         <button
           disabled={id === '826'}
-          className="card__arrow"
+          className={styles.card__arrow}
           onClick={() => {
             navigate(`/characters/${Number(id) + 1}`);
             setCharUrl(`https://rickandmortyapi.com/api/character/${Number(id) + 1}`);

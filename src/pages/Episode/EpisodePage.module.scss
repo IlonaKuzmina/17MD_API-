@@ -1,4 +1,4 @@
-.character__card--container {
+.card__container {
   margin-top: 40px;
   border: 3px solid rgb(230, 133, 7);
   border-radius: 20px;
@@ -14,36 +14,24 @@
 }
 
 .card__arrow svg {
-  fill:  #292643;
+  fill: #292643;
   &:hover {
     fill: rgb(235, 137, 9);
-      
   }
 }
 
 .card__arrow:disabled svg {
-    fill: rgb(124, 123, 121);
-  }
+  fill: rgb(124, 123, 121);
+}
 
-.character__card--title {
+.card__title {
   padding-bottom: 20px;
   font-size: 45px;
 }
 
-.episodes__list {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.image--specification {
-  width: 100%;
-  margin: 0;
-  align-items: center;
-  justify-items: center;
-  border-radius: 20px;
-  border: 3px solid rgb(230, 133, 7);
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+.info__specification {
+  font-size: 40px;
+  padding: 10px 20px;
 }
 
 .info__container {
@@ -52,12 +40,15 @@
   align-items: flex-start;
 }
 
-.info--specification {
+.last__infospceification {
   font-size: 40px;
   padding: 10px 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
-.character__card--hr {
+.card__line {
   border: 1px solid rgb(230, 133, 7);
   margin-bottom: 40px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);

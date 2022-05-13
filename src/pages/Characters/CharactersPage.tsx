@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
 import { Character } from '../Modals/CharactersModal';
-import './CharactersPage.scss';
+import styles from './CharactersPage.module.scss';
 import Loader from '../../components/Loader/Loader';
 
 const CharactersPage = () => {
@@ -10,6 +10,7 @@ const CharactersPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMesagge, setErrorMessage] = useState<string>('');
   const [activeFilter, setActiveFilter] = useState<string>('');
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const getCharacters = async () => {
@@ -44,7 +45,7 @@ const CharactersPage = () => {
   };
 
   return (
-    <div className="characters__wrapper">
+    <div className={styles.characters__wrapper}>
       <div className="text__box">
         <span>C</span>
         <span>H</span>
@@ -58,33 +59,45 @@ const CharactersPage = () => {
         <span>s</span>
       </div>
 
-      <div className="button__container">
+      <div className={styles.button__container}>
         <div className="row">
           <div className="col-xs-12">
             <button
-              className="characters__card--button"
-              onClick={() => setActiveFilter('')}
+              className="button"
+              onClick={() => {
+                setActiveFilter('');
+                setSearchParams({ status: 'all' });
+              }}
             >
               All
 
             </button>
             <button
-              className="characters__card--button green"
-              onClick={() => setActiveFilter('alive')}
+              className="button green"
+              onClick={() => {
+                setActiveFilter('alive');
+                setSearchParams({ status: 'alive' });
+              }}
             >
               Alive
 
             </button>
             <button
-              className="characters__card--button red"
-              onClick={() => setActiveFilter('dead')}
+              className="button red"
+              onClick={() => {
+                setActiveFilter('dead');
+                setSearchParams({ status: 'dead' });
+              }}
             >
               Dead
 
             </button>
             <button
-              className="characters__card--button grey"
-              onClick={() => setActiveFilter('unknown')}
+              className="button grey"
+              onClick={() => {
+                setActiveFilter('unknown');
+                setSearchParams({ status: 'unknown' });
+              }}
             >
               Unknown
 
@@ -94,7 +107,7 @@ const CharactersPage = () => {
         </div>
       </div>
 
-      <div className="characters__container">
+      <div className={styles.characters__container}>
         {loading && <Loader />}
         {errorMesagge && <span className="error__message">{errorMesagge}</span>}
         {characters && characters.map(({
@@ -102,13 +115,13 @@ const CharactersPage = () => {
         }) => (
           <div
             style={{ backgroundColor: setColorToCard(status) }}
-            className="characters__card"
+            className={styles.characters__card}
             key={id}
           >
-            <img className="characters__card--image" src={image} alt="Nav bildes" />
+            <img className={styles.card__image} src={image} alt="Nav bildes" />
             <div className="row">
               <div className="col-xs-12">
-                <div className="characters__card--name">
+                <div className={styles.card__name}>
                   <span>{name}</span>
                   <span>{status}</span>
                 </div>
@@ -116,7 +129,7 @@ const CharactersPage = () => {
               </div>
               <div className="col-xs-12">
                 <button
-                  className="characters__card--button"
+                  className="button"
                   onClick={() => navigate(`/characters/${id}`)}
                 >
                   Read more

@@ -2,37 +2,111 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.text__box {
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: 10px;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  padding: 50px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.text__box span {
+  color: rgb(230, 133, 7);
+  text-transform: uppercase;
+  animation: animate 5s ease forwards infinite;
+}
+
+.text__box span:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.text__box span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.text__box span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.text__box span:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.text__box span:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.text__box span:nth-child(6) {
+  animation-delay: 0.6s;
+}
+.text__box span:nth-child(7) {
+  animation-delay: 0.7s;
+}
+.text__box span:nth-child(8) {
+  animation-delay: 0.8s;
+}
+.text__box span:nth-child(9) {
+  animation-delay: 0.9s;
+}
+.text__box span:nth-child(10) {
+  animation-delay: 1s;
+}
+
+@keyframes animate {
+  0%,
+  100% {
+    text-shadow: 0 0 0 #000;
+  }
+  50%,
+  100% {
+    text-shadow: 0 30px 25px #000;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.button {
+  background-color: rgb(230, 133, 7);
+  cursor: pointer;
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  border: none;
+  margin: 0 40px 40px;
+  border-radius: 20px;
+  padding: 5px 35px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+  transition: 0.4s;
+  &:hover {
+    background-color: rgb(253, 177, 77);
   }
-  to {
-    transform: rotate(360deg);
+  &:active {
+    opacity: 0.7;
+    box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.5);
+    transition: 0.4s;
+  }
+}
+
+.red {
+  background-color: #dd4646;
+}
+
+.green {
+  background-color: #0baa18;
+}
+
+.grey {
+  background-color: #7f817f;
+}
+
+.error__message {
+  font-size: 50px;
+  margin-bottom: 300px;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: inherit;
+  transition: 0.4s;
+
+  &:hover {
+    text-decoration: underline;
+    color: rgb(230, 133, 7);
+    transition: 0.4s;
   }
 }
