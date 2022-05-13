@@ -2,10 +2,10 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
-import { Episode } from '../Modals/EpisodesModal';
+import { LocationL } from '../Modals/LocationModal';
 
-const EpisodeCard = () => {
-  const [episode, setEpisode] = useState<Episode>();
+const LocationPage = () => {
+  const [location, setLocation] = useState<LocationL>();
   const [loading, setLoading] = useState<boolean>(false);
   const { id } = useParams();
   const [charUrl, setCharUrl] = useState<string>(`https://rickandmortyapi.com/api/episode/${id}`);
@@ -15,9 +15,9 @@ const EpisodeCard = () => {
     setLoading(true);
     try {
       const response = await axios.get(charUrl);
-      setEpisode(response.data);
+      setLocation(response.data);
     } catch (error) {
-      navigate('/episodes');
+      navigate('/location');
     } finally {
       setLoading(false);
     }
@@ -40,8 +40,8 @@ const EpisodeCard = () => {
           disabled={id === '1'}
           className="card__arrow"
           onClick={() => {
-            navigate(`/episodes/${Number(id) - 1}`);
-            setCharUrl(`https://rickandmortyapi.com/api/episode/${Number(id) - 1}`);
+            navigate(`/location/${Number(id) - 1}`);
+            setCharUrl(`https://rickandmortyapi.com/api/location/${Number(id) - 1}`);
           }}
         >
           <svg width="32" height="50" viewBox="0 0 32 50" xmlns="http://www.w3.org/2000/svg">
@@ -60,7 +60,7 @@ const EpisodeCard = () => {
               <h1 className="character__card--title">
                 <strong>Episode name:</strong>
                 {' '}
-                {episode?.name}
+                {location?.name}
               </h1>
               <hr className="character__card--hr" />
             </div>
@@ -73,28 +73,31 @@ const EpisodeCard = () => {
                 <span className="info--specification">
                   <strong>Id:</strong>
                   {' '}
-                  {episode?.id}
+                  {location?.id}
                 </span>
+
                 <span className="info--specification">
-                  <strong>Air Date:</strong>
+                  <strong>Type:</strong>
                   {' '}
-                  {episode?.air_date}
+                  {location?.type}
                 </span>
+
                 <span className="info--specification">
-                  <strong>Episode:</strong>
+                  <strong>Dimension:</strong>
                   {' '}
-                  {episode?.episode}
+                  {location?.dimension}
                 </span>
+
                 <span className="info--specification">
-                  <strong>Created</strong>
+                  <strong>Created:</strong>
                   {' '}
-                  {episode?.created}
+                  {location?.created}
                 </span>
 
               </div>
               <button
                 className="characters__card--button"
-                onClick={() => navigate('/episodes')}
+                onClick={() => navigate('/location')}
               >
                 Back to all episodes!
               </button>
@@ -105,11 +108,11 @@ const EpisodeCard = () => {
       </div>
       <div className="col-xs-1">
         <button
-          disabled={id === '51'}
+          disabled={id === '826'}
           className="card__arrow"
           onClick={() => {
-            navigate(`/episodes/${Number(id) + 1}`);
-            setCharUrl(`https://rickandmortyapi.com/api/episode/${Number(id) + 1}`);
+            navigate(`/location/${Number(id) + 1}`);
+            setCharUrl(`https://rickandmortyapi.com/api/location/${Number(id) + 1}`);
           }}
         >
           <svg width="32" height="50" viewBox="0 0 32 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -125,4 +128,4 @@ const EpisodeCard = () => {
   );
 };
 
-export default EpisodeCard;
+export default LocationPage;

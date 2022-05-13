@@ -1,25 +1,23 @@
-/* eslint-disable max-len */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
-import { Character } from '../Modals/CharactersModal';
-import './CharacterCard.scss';
+import { Episode } from '../Modals/EpisodesModal';
 
-const CharacterCard = () => {
-  const [character, setCharacter] = useState<Character>();
+const EpisodePage = () => {
+  const [episode, setEpisode] = useState<Episode>();
   const [loading, setLoading] = useState<boolean>(false);
   const { id } = useParams();
-  const [charUrl, setCharUrl] = useState<string>(`https://rickandmortyapi.com/api/character/${id}`);
+  const [charUrl, setCharUrl] = useState<string>(`https://rickandmortyapi.com/api/episode/${id}`);
   const navigate = useNavigate();
 
-  const getCharacter = async () => {
+  const getEpisode = async () => {
     setLoading(true);
     try {
       const response = await axios.get(charUrl);
-      setCharacter(response.data);
+      setEpisode(response.data);
     } catch (error) {
-      navigate('/characters');
+      navigate('/episodes');
     } finally {
       setLoading(false);
     }
@@ -27,12 +25,12 @@ const CharacterCard = () => {
 
   useEffect(() => {
     if (id) {
-      getCharacter();
+      getEpisode();
     }
   }, []);
 
   useEffect(() => {
-    getCharacter();
+    getEpisode();
   }, [charUrl]);
 
   return (
@@ -42,8 +40,8 @@ const CharacterCard = () => {
           disabled={id === '1'}
           className="card__arrow"
           onClick={() => {
-            navigate(`/characters/${Number(id) - 1}`);
-            setCharUrl(`https://rickandmortyapi.com/api/character/${Number(id) - 1}`);
+            navigate(`/episodes/${Number(id) - 1}`);
+            setCharUrl(`https://rickandmortyapi.com/api/episode/${Number(id) - 1}`);
           }}
         >
           <svg width="32" height="50" viewBox="0 0 32 50" xmlns="http://www.w3.org/2000/svg">
@@ -56,67 +54,49 @@ const CharacterCard = () => {
         </button>
       </div>
       <div className="col-xs-10 col-md-9">
-
         <div className="character__card--container">
           <div className="row center-xs">
-            {loading && <Loader />}
             <div className="col-xs-12 col-md-12">
               <h1 className="character__card--title">
-                {character?.name}
+                <strong>Episode name:</strong>
+                {' '}
+                {episode?.name}
               </h1>
               <hr className="character__card--hr" />
             </div>
           </div>
           <div className="row center-xs">
-            <div className="col-xs-12 col-md-5">
-              <div className="image__container">
-                <img className="image--specification" src={character?.image} alt="Nav bildes" />
-              </div>
-            </div>
-            <div className="col-xs-12 col-md-6">
+
+            <div className="col-xs-12 col-md-10">
+              {loading && <Loader />}
               <div className="info__container">
                 <span className="info--specification">
                   <strong>Id:</strong>
                   {' '}
-                  {character?.id}
+                  {episode?.id}
                 </span>
                 <span className="info--specification">
-                  <strong>Status:</strong>
+                  <strong>Air Date:</strong>
                   {' '}
-                  {character?.status}
+                  {episode?.air_date}
                 </span>
                 <span className="info--specification">
-                  <strong>Species:</strong>
-                  {' '}
-                  {character?.species}
-                </span>
-                <span className="info--specification">
-                  <strong>Type:</strong>
-                  {' '}
-                  {character?.type}
-                </span>
-                <span className="info--specification">
-                  <strong>Gender:</strong>
-                  {' '}
-                  {character?.genders}
-                </span>
-                <span className="info--specification episodes__list">
                   <strong>Episode:</strong>
                   {' '}
-                  {character?.episode.map((epsi) => (
-                    <div key={Math.random()}>
-                      {', '}
-                      {epsi.slice(40)}
-                    </div>
-                  ))}
-
+                  {episode?.episode}
                 </span>
+                <span className="info--specification">
+                  <strong>Created</strong>
+                  {' '}
+                  {episode?.created}
+                </span>
+
               </div>
               <button
                 className="characters__card--button"
-                onClick={() => navigate('/characters')}
+                onClick={() => navigate('/episodes')}
               >
-                Back to all characters!
+                Back to all episodes!
               </button>
             </div>
           </div>
@@ -125,11 +105,11 @@ const CharacterCard = () => {
       </div>
       <div className="col-xs-1">
         <button
-          disabled={id === '826'}
+          disabled={id === '51'}
           className="card__arrow"
           onClick={() => {
-            navigate(`/characters/${Number(id) + 1}`);
-            setCharUrl(`https://rickandmortyapi.com/api/character/${Number(id) + 1}`);
+            navigate(`/episodes/${Number(id) + 1}`);
+            setCharUrl(`https://rickandmortyapi.com/api/episode/${Number(id) + 1}`);
           }}
         >
           <svg width="32" height="50" viewBox="0 0 32 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -145,4 +125,4 @@ const CharacterCard = () => {
   );
 };
 
-export default CharacterCard;
+export default EpisodePage;

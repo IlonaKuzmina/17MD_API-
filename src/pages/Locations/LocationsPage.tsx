@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
 import { LocationL } from '../Modals/LocationModal';
-import './LocationPage.scss';
+import './LocationsPage.scss';
 
 const EpisodesPage = () => {
   const [locations, setLocations] = useState<LocationL[]>();
@@ -17,7 +17,6 @@ const EpisodesPage = () => {
     try {
       const response = await axios.get('https://rickandmortyapi.com/api/location');
       setLocations(response.data.results);
-      console.log(response.data.results);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const message = error.response?.status === 404 ? 'Nothing to show' : error.message;

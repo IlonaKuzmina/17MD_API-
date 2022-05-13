@@ -34,9 +34,6 @@ const EpisodesPage = () => {
 
   useEffect(() => {
     getEpisodes();
-  }, [search]);
-
-  useEffect(() => {
     setInputValue('');
   }, [search]);
 
@@ -76,7 +73,7 @@ const EpisodesPage = () => {
             <button
               className="characters__card--button"
               type="button"
-              onClick={() => setSearch(inputValue)}
+              onClick={() => getEpisodes()}
             >
               Search
             </button>

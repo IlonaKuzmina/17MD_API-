@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
-import { Character, CharacterApiResponse } from '../Modals/CharactersModal';
+import { Character } from '../Modals/CharactersModal';
 import './CharactersPage.scss';
 import Loader from '../../components/Loader/Loader';
 
@@ -9,15 +9,14 @@ const CharactersPage = () => {
   const [characters, setCharacters] = useState<Character[]>();
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMesagge, setErrorMessage] = useState<string>('');
-  const [inputValue, setInputValue] = useState('');
-  const [search, setSearch] = useState<string>('');
+  const [activeFilter, setActiveFilter] = useState<string>('');
   const navigate = useNavigate();
 
   const getCharacters = async () => {
     setLoading(true);
-    const charName = `?name=${inputValue}`;
+    const params = activeFilter === 'all' ? '' : `?status=${activeFilter}`;
     try {
-      const response = await axios.get(`https://rickandmortyapi.com/api/character/${charName}`);
+      const response = await axios.get(`https://rickandmortyapi.com/api/character/${params}`);
       setCharacters(response.data.results);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -33,64 +32,16 @@ const CharactersPage = () => {
 
   useEffect(() => {
     getCharacters().then();
-  }, [search]);
-
-  const getAliveCharacters = async () => {
-    setLoading(true);
-    const charName = `?name=${inputValue}`;
-    try {
-      const response = await axios.get(`https://rickandmortyapi.com/api/character/?status=alive/${charName}`);
-      setCharacters(response.data.results);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const message = error.response?.status === 404 ? 'The information you requested was not found!' : error.message;
-        setErrorMessage(message);
-      } else {
-        setErrorMessage('Not axios error');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getDeadCharacters = async () => {
-    setLoading(true);
-    const charName = `?name=${inputValue}`;
-    try {
-      const response = await axios.get('https://rickandmortyapi.com/api/character/?status=dead');
-      setCharacters(response.data.results);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const message = error.response?.status === 404 ? 'The information you requested was not found!' : error.message;
-        setErrorMessage(message);
-      } else {
-        setErrorMessage('Not axios error');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getUnknownCharacters = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get('https://rickandmortyapi.com/api/character/?status=unknown');
-      setCharacters(response.data.results);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const message = error.response?.status === 404 ? 'The information you requested was not found!' : error.message;
-        setErrorMessage(message);
-      } else {
-        setErrorMessage('Not axios error');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, []);
 
   useEffect(() => {
-    setInputValue('');
-  }, [search]);
+    getCharacters().then();
+  }, [activeFilter]);
+
+  const setColorToCard = (status:string) => {
+    const notDeadColor = status === 'Alive' ? '#0baa18' : '';
+    return status === 'Dead' ? '#dd4646' : notDeadColor;
+  };
 
   return (
     <div className="characters__wrapper">
@@ -112,55 +63,33 @@ const CharactersPage = () => {
           <div className="col-xs-12">
             <button
               className="characters__card--button"
-              onClick={() => getCharacters()}
+              onClick={() => setActiveFilter('')}
             >
               All
 
             </button>
             <button
               className="characters__card--button green"
-              onClick={() => getAliveCharacters()}
+              onClick={() => setActiveFilter('alive')}
             >
               Alive
 
             </button>
             <button
               className="characters__card--button red"
-              onClick={() => getDeadCharacters()}
+              onClick={() => setActiveFilter('dead')}
             >
               Dead
 
             </button>
             <button
               className="characters__card--button grey"
-              onClick={() => getUnknownCharacters()}
+              onClick={() => setActiveFilter('unknown')}
             >
               Unknown
 
             </button>
-            <form
-              className="form__container"
-              action="submit"
-              onSubmit={(e) => {
-                e.preventDefault();
-                setInputValue('');
-              }}
-            >
-              <input
-                className="search__input"
-                type="text"
-                value={inputValue}
-                onChange={(event) => setInputValue(event.target.value)}
-                placeholder="How can I help You?"
-              />
-              <button
-                className="characters__card--button"
-                type="button"
-                onClick={() => setSearch(inputValue)}
-              >
-                Search
-              </button>
-            </form>
+
           </div>
         </div>
       </div>
@@ -172,8 +101,7 @@ const CharactersPage = () => {
           id, name, status, image,
         }) => (
           <div
-            // eslint-disable-next-line no-nested-ternary
-            style={{ backgroundColor: status === 'Dead' ? '#dd4646' : status === 'Alive' ? '#0baa18' : '' }}
+            style={{ backgroundColor: setColorToCard(status) }}
             className="characters__card"
             key={id}
           >

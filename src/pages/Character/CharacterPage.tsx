@@ -1,23 +1,25 @@
+/* eslint-disable max-len */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
-import { LocationL } from '../Modals/LocationModal';
+import { Character } from '../Modals/CharactersModal';
+import './CharacterPage.scss';
 
-const LocationCard = () => {
-  const [location, setLocation] = useState<LocationL>();
+const CharacterPage = () => {
+  const [character, setCharacter] = useState<Character>();
   const [loading, setLoading] = useState<boolean>(false);
   const { id } = useParams();
-  const [charUrl, setCharUrl] = useState<string>(`https://rickandmortyapi.com/api/episode/${id}`);
+  const [charUrl, setCharUrl] = useState<string>(`https://rickandmortyapi.com/api/character/${id}`);
   const navigate = useNavigate();
 
-  const getEpisode = async () => {
+  const getCharacter = async () => {
     setLoading(true);
     try {
       const response = await axios.get(charUrl);
-      setLocation(response.data);
+      setCharacter(response.data);
     } catch (error) {
-      navigate('/location');
+      navigate('/characters');
     } finally {
       setLoading(false);
     }
@@ -25,12 +27,12 @@ const LocationCard = () => {
 
   useEffect(() => {
     if (id) {
-      getEpisode();
+      getCharacter();
     }
   }, []);
 
   useEffect(() => {
-    getEpisode();
+    getCharacter();
   }, [charUrl]);
 
   return (
@@ -40,8 +42,8 @@ const LocationCard = () => {
           disabled={id === '1'}
           className="card__arrow"
           onClick={() => {
-            navigate(`/location/${Number(id) - 1}`);
-            setCharUrl(`https://rickandmortyapi.com/api/location/${Number(id) - 1}`);
+            navigate(`/characters/${Number(id) - 1}`);
+            setCharUrl(`https://rickandmortyapi.com/api/character/${Number(id) - 1}`);
           }}
         >
           <svg width="32" height="50" viewBox="0 0 32 50" xmlns="http://www.w3.org/2000/svg">
@@ -54,52 +56,67 @@ const LocationCard = () => {
         </button>
       </div>
       <div className="col-xs-10 col-md-9">
+
         <div className="character__card--container">
           <div className="row center-xs">
+            {loading && <Loader />}
             <div className="col-xs-12 col-md-12">
               <h1 className="character__card--title">
-                <strong>Episode name:</strong>
-                {' '}
-                {location?.name}
+                {character?.name}
               </h1>
               <hr className="character__card--hr" />
             </div>
           </div>
           <div className="row center-xs">
-
-            <div className="col-xs-12 col-md-10">
-              {loading && <Loader />}
+            <div className="col-xs-12 col-md-5">
+              <div className="image__container">
+                <img className="image--specification" src={character?.image} alt="Nav bildes" />
+              </div>
+            </div>
+            <div className="col-xs-12 col-md-6">
               <div className="info__container">
                 <span className="info--specification">
                   <strong>Id:</strong>
                   {' '}
-                  {location?.id}
+                  {character?.id}
                 </span>
-
+                <span className="info--specification">
+                  <strong>Status:</strong>
+                  {' '}
+                  {character?.status}
+                </span>
+                <span className="info--specification">
+                  <strong>Species:</strong>
+                  {' '}
+                  {character?.species}
+                </span>
                 <span className="info--specification">
                   <strong>Type:</strong>
                   {' '}
-                  {location?.type}
+                  {character?.type}
                 </span>
-
                 <span className="info--specification">
-                  <strong>Dimension:</strong>
+                  <strong>Gender:</strong>
                   {' '}
-                  {location?.dimension}
+                  {character?.genders}
                 </span>
-
-                <span className="info--specification">
-                  <strong>Created:</strong>
+                <span className="info--specification episodes__list">
+                  <strong>Episode:</strong>
                   {' '}
-                  {location?.created}
-                </span>
+                  {character?.episode.map((epsi) => (
+                    <div key={Math.random()}>
+                      {', '}
+                      {epsi.slice(40)}
+                    </div>
+                  ))}
 
+                </span>
               </div>
               <button
                 className="characters__card--button"
-                onClick={() => navigate('/location')}
+                onClick={() => navigate('/characters')}
               >
-                Back to all episodes!
+                Back to all characters!
               </button>
             </div>
           </div>
@@ -111,8 +128,8 @@ const LocationCard = () => {
           disabled={id === '826'}
           className="card__arrow"
           onClick={() => {
-            navigate(`/location/${Number(id) + 1}`);
-            setCharUrl(`https://rickandmortyapi.com/api/location/${Number(id) + 1}`);
+            navigate(`/characters/${Number(id) + 1}`);
+            setCharUrl(`https://rickandmortyapi.com/api/character/${Number(id) + 1}`);
           }}
         >
           <svg width="32" height="50" viewBox="0 0 32 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -128,4 +145,4 @@ const LocationCard = () => {
   );
 };
 
-export default LocationCard;
+export default CharacterPage;
