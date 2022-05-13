@@ -38,3 +38,43 @@
   padding: 25px 0;
   font-size: 20px;
 }
+
+.card__arrow {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.card__arrow svg {
+  fill: #292643;
+  &:hover {
+    fill: rgb(235, 137, 9);
+  }
+}
+
+.card__arrow:disabled svg {
+  fill: rgb(124, 123, 121);
+}
+
+.pagination__items {
+  font-weight: bold;
+  background-color: rgb(230, 133, 7);
+  border: 3px solid rgb(230, 133, 7);
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.pagination__item {
+  font-weight: bold;
+  background-color: rgb(253, 177, 77);
+  border: 3px solid rgb(230, 133, 7);
+  border-radius: 10px;
+  margin: 10px 10px 40px 10px;
+}
+
+.pagination__box{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+justify-content: center;
+}
