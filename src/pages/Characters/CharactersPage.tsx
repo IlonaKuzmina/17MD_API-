@@ -7,22 +7,22 @@ import Loader from '../../components/Loader/Loader';
 
 const CharactersPage = () => {
   const [characters, setCharacters] = useState<Character[]>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [errorMesagge, setErrorMessage] = useState<string>('');
-  const [activeFilter, setActiveFilter] = useState<string>('');
+  const [loading, setLoading] = useState(false);
+  const [errorMesagge, setErrorMessage] = useState('');
+  const [activeFilter, setActiveFilter] = useState('');
   const [pageCount, setPageCount] = useState<number>();
   const [pages, setPages] = useState<number[]>();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [minPage, setMinPage] = useState<number>(1);
-  const [maxPage, setMaxPage] = useState<number>(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [minPage, setMinPage] = useState(1);
+  const [maxPage, setMaxPage] = useState(10);
   const navigate = useNavigate();
 
   const getCharacters = async () => {
     setLoading(true);
-    const params = activeFilter === 'all' ? '' : `?status=${activeFilter}`;
+    // const params = activeFilter === 'all' ? '' : `?status=${activeFilter}`;
     try {
-      const response = await axios.get(`https://rickandmortyapi.com/api/character/${params}`);
+      const response = await axios.get(`https://rickandmortyapi.com/api/character/?${searchParams}`);
       setCharacters(response.data.results);
       setPageCount(response.data.info.pages);
     } catch (error) {
@@ -38,7 +38,7 @@ const CharactersPage = () => {
   };
 
   useEffect(() => {
-    getCharacters().then();
+    getCharacters();
     if (pageCount) {
       const pagesArr = Array.from(Array(pageCount + 1).keys()).map((page) => page + 1);
       setPages(pagesArr);
